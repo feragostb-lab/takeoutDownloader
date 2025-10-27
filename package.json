@@ -1,0 +1,23 @@
+{
+  "name": "takeout-downloader",
+  "version": "1.0.0",
+  "description": "Chrome extension to automate Google Takeout downloads",
+  "main": "content.js",
+  "scripts": {
+    "test": "node testDemo.js",
+    "test:demo": "node testDemo.js"
+  },
+  "keywords": [
+    "chrome",
+    "extension",
+    "google-takeout",
+    "download",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "jsdom": "^23.0.0"
+  }
+}

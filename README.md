@@ -13,7 +13,27 @@ A Chrome extension to automate downloading files from Google Takeout.
 - 🔍 Automatically finds download links (supports "download" and "descargar" text)
 - 🎯 Highlights links for easy identification
 - ⬇️ One-click batch download
+- 📊 Detects already downloaded files and skips them
 - ✨ Clean, intuitive interface
+
+## Testing
+
+To test the extension's link detection functionality:
+
+```bash
+node testDemo.js
+```
+
+or
+
+```bash
+npm test
+```
+
+This will test the `GoogleTakeoutDemo.html` file and verify:
+- Total links found: 155
+- Already downloaded: 54
+- To download: 101
 
 ## Installation
 

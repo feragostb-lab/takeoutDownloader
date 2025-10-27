@@ -21,7 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.tabs.sendMessage(tabs[0].id, { action: 'findLinks' }, (response) => {
         if (response && response.count) {
-          statusDiv.textContent = `Found ${response.count} download link(s)`;
+          let message = `Found ${response.count} link(s)`;
+          if (response.downloaded !== undefined && response.toDownload !== undefined) {
+            message += ` (${response.downloaded} downloaded, ${response.toDownload} to download)`;
+          }
+          statusDiv.textContent = message;
           statusDiv.className = 'status success';
         } else {
           statusDiv.textContent = 'No download links found';

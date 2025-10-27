@@ -8,15 +8,27 @@ function findDownloadLinks() {
   
   allLinks.forEach(link => {
     const linkText = link.textContent.trim().toLowerCase();
-    if (linkText.includes('descargar') || linkText.includes('download')) {
-      const href = link.getAttribute('href');
-      if (href) {
-        links.push({
-          text: link.textContent.trim(),
-          url: href,
-          element: link
-        });
-      }
+    const href = link.getAttribute('href');
+    const isDownloaded = link.hasAttribute('data-downloaded') && link.getAttribute('data-downloaded') === 'true';
+    const hasDownloadedClass = link.classList.contains('downloaded');
+    
+    // Check if link matches download criteria:
+    // 1. Text contains "descargar" or "download"
+    // 2. URL contains takeout.google.com/download
+    // 3. URL contains /download? pattern
+    const matchesText = linkText.includes('descargar') || linkText.includes('download');
+    const matchesUrl = href && (
+      href.includes('takeout.google.com/download') ||
+      href.includes('/download?')
+    );
+    
+    if ((matchesText || matchesUrl) && href) {
+      links.push({
+        text: link.textContent.trim(),
+        url: href,
+        element: link,
+        downloaded: isDownloaded || hasDownloadedClass
+      });
     }
   });
   
@@ -37,9 +49,11 @@ function highlightDownloadLinks() {
 // Function to download all links
 function downloadAllLinks() {
   const links = findDownloadLinks();
+  // Filter out already downloaded links
+  const linksToDownload = links.filter(linkObj => !linkObj.downloaded);
   let downloadCount = 0;
   
-  links.forEach((linkObj, index) => {
+  linksToDownload.forEach((linkObj, index) => {
     // Add delay to avoid overwhelming the browser
     setTimeout(() => {
       const fullUrl = new URL(linkObj.url, window.location.href).href;
@@ -57,14 +71,21 @@ function downloadAllLinks() {
     }, index * 1000); // 1 second delay between downloads
   });
   
-  return links.length;
+  return linksToDownload.length;
 }
 
 // Listen for messages from popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'findLinks') {
     const links = findDownloadLinks();
-    sendResponse({ count: links.length, links: links.map(l => ({ text: l.text, url: l.url })) });
+    const downloaded = links.filter(l => l.downloaded).length;
+    const toDownload = links.length - downloaded;
+    sendResponse({ 
+      count: links.length,
+      downloaded: downloaded,
+      toDownload: toDownload,
+      links: links.map(l => ({ text: l.text, url: l.url, downloaded: l.downloaded })) 
+    });
   } else if (request.action === 'highlightLinks') {
     const count = highlightDownloadLinks();
     sendResponse({ count: count });
