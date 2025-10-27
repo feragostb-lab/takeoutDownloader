@@ -9,8 +9,19 @@ function findDownloadLinks() {
   allLinks.forEach(link => {
     const linkText = link.textContent.trim().toLowerCase();
     const href = link.getAttribute('href');
+    const ariaLabel = link.getAttribute('aria-label');
     const isDownloaded = link.hasAttribute('data-downloaded') && link.getAttribute('data-downloaded') === 'true';
     const hasDownloadedClass = link.classList.contains('downloaded');
+    
+    // Check if aria-label indicates already downloaded (re-download labels)
+    // Supports multiple languages: Spanish, English, and common variations
+    const hasRedownloadAriaLabel = ariaLabel && (
+      ariaLabel.toLowerCase().includes('volver a descargar') || // Spanish: "Re-download"
+      ariaLabel.toLowerCase().includes('re-download') ||         // English: "Re-download"
+      ariaLabel.toLowerCase().includes('redownload') ||          // English variation
+      ariaLabel.toLowerCase().includes('descargar de nuevo') ||  // Spanish variation
+      ariaLabel.toLowerCase().includes('download again')         // English variation
+    );
     
     // Check if link matches download criteria:
     // 1. Text contains "descargar" or "download"
@@ -27,7 +38,7 @@ function findDownloadLinks() {
         text: link.textContent.trim(),
         url: href,
         element: link,
-        downloaded: isDownloaded || hasDownloadedClass
+        downloaded: isDownloaded || hasDownloadedClass || hasRedownloadAriaLabel
       });
     }
   });
