@@ -54,6 +54,21 @@ if (linkText.includes('descargar') || linkText.includes('download')) {
 }
 ```
 
+### Already Downloaded Detection
+```javascript
+// Detects already downloaded files using multiple methods:
+// 1. data-downloaded="true" attribute
+// 2. "downloaded" CSS class
+// 3. aria-label with re-download indicators in multiple languages
+const hasRedownloadAriaLabel = ariaLabel && (
+  ariaLabel.toLowerCase().includes('volver a descargar') || // Spanish
+  ariaLabel.toLowerCase().includes('re-download') ||         // English
+  ariaLabel.toLowerCase().includes('redownload') ||
+  ariaLabel.toLowerCase().includes('descargar de nuevo') ||
+  ariaLabel.toLowerCase().includes('download again')
+);
+```
+
 ### Visual Highlighting
 ```javascript
 // Adds green border and background to download links

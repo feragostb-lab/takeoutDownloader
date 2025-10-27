@@ -7,6 +7,8 @@ A Chrome extension to automate downloading files from Google Takeout (takeout.go
 - 🔍 Automatically finds download links with "descargar" or "download" text
 - 🎯 Highlights download links on the page for easy identification
 - ⬇️ One-click download of all available files
+- 📊 Detects already downloaded files and skips them (supports aria-label detection)
+- 🌐 Multilingual support for detecting re-download indicators (Spanish, English)
 - ✨ Beautiful and intuitive user interface
 - 🌐 Works specifically on Google Takeout archive page
 
