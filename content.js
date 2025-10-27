@@ -49,7 +49,7 @@ function highlightDownloadLinks() {
 // Function to download all links
 function downloadAllLinks() {
   const links = findDownloadLinks();
-  // Filter out already downloaded links
+  // Filter out already downloaded links to avoid re-downloading files that were already completed
   const linksToDownload = links.filter(linkObj => !linkObj.downloaded);
   let downloadCount = 0;
   
