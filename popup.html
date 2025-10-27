@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Takeout Downloader</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Takeout Downloader</h1>
+    <p class="subtitle">Automate your Google Takeout downloads</p>
+    
+    <div class="info" id="linkInfo">
+      <p>Navigate to <strong>takeout.google.com/manage/archive</strong></p>
+    </div>
+    
+    <div class="buttons">
+      <button id="findBtn" class="btn btn-primary">Find Download Links</button>
+      <button id="highlightBtn" class="btn btn-secondary">Highlight Links</button>
+      <button id="downloadBtn" class="btn btn-success">Download All</button>
+    </div>
+    
+    <div id="status" class="status"></div>
+    
+    <div class="footer">
+      <p>Click "Download All" to start downloading all available files</p>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
