@@ -10,7 +10,6 @@ function findDownloadLinks() {
     const href = link.getAttribute('href');
     const ariaLabel = link.getAttribute('aria-label');
     const jsname = link.getAttribute('jsname');
-    const className = link.className;
     const isDownloaded = link.hasAttribute('data-downloaded') && link.getAttribute('data-downloaded') === 'true';
     const hasDownloadedClass = link.classList.contains('downloaded');
     

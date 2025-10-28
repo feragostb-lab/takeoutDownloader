@@ -86,7 +86,7 @@ async function runTest() {
   } catch (e) {
     // Fallback: Parse HTML with regex (simpler but less robust)
     console.log('ℹ JSDOM not available, using fallback parser');
-    // Updated regex to capture all attributes including jsname
+    // Updated regex to capture href, class, data-downloaded, aria-label, and jsname attributes
     const linkRegex = /<a\s+([^>]*)>([^<]*)<\/a>/gi;
     let match;
     
