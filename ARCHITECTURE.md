@@ -47,9 +47,11 @@ takeoutDownloader/
 
 ### Automatic Link Detection
 ```javascript
-// Finds links with specific text
-const linkText = link.textContent.trim().toLowerCase();
-if (linkText.includes('descargar') || linkText.includes('download')) {
+// Finds links using stable Google attributes (more robust than text/URL matching)
+const jsname = link.getAttribute('jsname');
+const matchesJsname = jsname === 'hSRGPd'; // Google's internal identifier for download buttons
+const matchesDownloadUrl = href && href.includes('/download');
+if (matchesJsname && matchesDownloadUrl && href) {
   // Process this link
 }
 ```
