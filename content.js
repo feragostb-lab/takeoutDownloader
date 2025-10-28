@@ -7,9 +7,10 @@ function findDownloadLinks() {
   const allLinks = document.querySelectorAll('a');
   
   allLinks.forEach(link => {
-    const linkText = link.textContent.trim().toLowerCase();
     const href = link.getAttribute('href');
     const ariaLabel = link.getAttribute('aria-label');
+    const jsname = link.getAttribute('jsname');
+    const className = link.className;
     const isDownloaded = link.hasAttribute('data-downloaded') && link.getAttribute('data-downloaded') === 'true';
     const hasDownloadedClass = link.classList.contains('downloaded');
     
@@ -23,17 +24,13 @@ function findDownloadLinks() {
       ariaLabel.toLowerCase().includes('download again')         // English variation
     );
     
-    // Check if link matches download criteria:
-    // 1. Text contains "descargar" or "download"
-    // 2. URL contains takeout.google.com/download
-    // 3. URL contains /download? pattern
-    const matchesText = linkText.includes('descargar') || linkText.includes('download');
-    const matchesUrl = href && (
-      href.includes('takeout.google.com/download') ||
-      href.includes('/download?')
-    );
+    // Use jsname and class attributes for more robust link detection
+    // jsname="hSRGPd" identifies Google Takeout download buttons
+    // Check href contains download to filter out non-download links with same jsname
+    const matchesJsname = jsname === 'hSRGPd';
+    const matchesDownloadUrl = href && href.includes('/download');
     
-    if ((matchesText || matchesUrl) && href) {
+    if (matchesJsname && matchesDownloadUrl && href) {
       links.push({
         text: link.textContent.trim(),
         url: href,

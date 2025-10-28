@@ -17,9 +17,9 @@ function findDownloadLinks(document) {
   const allLinks = document.querySelectorAll('a');
   
   allLinks.forEach(link => {
-    const linkText = link.textContent.trim().toLowerCase();
     const href = link.getAttribute('href');
     const ariaLabel = link.getAttribute('aria-label');
+    const jsname = link.getAttribute('jsname');
     const isDownloaded = link.hasAttribute('data-downloaded') && link.getAttribute('data-downloaded') === 'true';
     const hasDownloadedClass = link.classList.contains('downloaded');
     
@@ -33,14 +33,13 @@ function findDownloadLinks(document) {
       ariaLabel.toLowerCase().includes('download again')         // English variation
     );
     
-    // Check if link matches download criteria
-    const matchesText = linkText.includes('descargar') || linkText.includes('download');
-    const matchesUrl = href && (
-      href.includes('takeout.google.com/download') ||
-      href.includes('/download?')
-    );
+    // Use jsname and class attributes for more robust link detection
+    // jsname="hSRGPd" identifies Google Takeout download buttons
+    // Check href contains download to filter out non-download links with same jsname
+    const matchesJsname = jsname === 'hSRGPd';
+    const matchesDownloadUrl = href && href.includes('/download');
     
-    if ((matchesText || matchesUrl) && href) {
+    if (matchesJsname && matchesDownloadUrl && href) {
       links.push({
         text: link.textContent.trim(),
         url: href,
@@ -87,7 +86,7 @@ async function runTest() {
   } catch (e) {
     // Fallback: Parse HTML with regex (simpler but less robust)
     console.log('ℹ JSDOM not available, using fallback parser');
-    // Updated regex to capture aria-label attribute
+    // Updated regex to capture all attributes including jsname
     const linkRegex = /<a\s+([^>]*)>([^<]*)<\/a>/gi;
     let match;
     
@@ -99,20 +98,21 @@ async function runTest() {
       const classMatch = attributes.match(/class="([^"]*)"/);
       const dataDownloadedMatch = attributes.match(/data-downloaded="([^"]*)"/);
       const ariaLabelMatch = attributes.match(/aria-label="([^"]*)"/);
+      const jsnameMatch = attributes.match(/jsname="([^"]*)"/);
       
       const href = hrefMatch ? hrefMatch[1] : null;
       const className = classMatch ? classMatch[1] : '';
       const dataDownloaded = dataDownloadedMatch ? dataDownloadedMatch[1] : '';
       const ariaLabel = ariaLabelMatch ? ariaLabelMatch[1] : '';
+      const jsname = jsnameMatch ? jsnameMatch[1] : '';
       
-      const linkText = text.trim().toLowerCase();
-      const matchesText = linkText.includes('descargar') || linkText.includes('download');
-      const matchesUrl = href && (
-        href.includes('takeout.google.com/download') ||
-        href.includes('/download?')
-      );
+      // Use jsname and class attributes for more robust link detection
+      // jsname="hSRGPd" identifies Google Takeout download buttons
+      // Check href contains download to filter out non-download links with same jsname
+      const matchesJsname = jsname === 'hSRGPd';
+      const matchesDownloadUrl = href && href.includes('/download');
       
-      if ((matchesText || matchesUrl) && href) {
+      if (matchesJsname && matchesDownloadUrl && href) {
         // Check if aria-label indicates already downloaded (re-download labels)
         const hasRedownloadAriaLabel = ariaLabel && (
           ariaLabel.toLowerCase().includes('volver a descargar') ||
