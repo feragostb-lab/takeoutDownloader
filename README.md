@@ -31,9 +31,9 @@ npm test
 ```
 
 This will test the `GoogleTakeoutDemo.html` file and verify:
-- Total links found: 160
-- Already downloaded: 59
-- To download: 101
+- Total links found: 131
+- Already downloaded: 54
+- To download: 77
 
 ## Installation
 

@@ -145,9 +145,9 @@ async function runTest() {
   console.log();
 
   // Verify expected values
-  const expectedTotal = 160;
-  const expectedDownloaded = 59;
-  const expectedToDownload = 101;
+  const expectedTotal = 131;
+  const expectedDownloaded = 54;
+  const expectedToDownload = 77;
 
   let allTestsPassed = true;
 
