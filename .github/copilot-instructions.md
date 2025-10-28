@@ -132,7 +132,7 @@ The following files/folders should NOT be modified or considered for code genera
 - `.vscode/`, `.idea/` (editor configs)
 - `dist/`, `build/` (if created)
 - `*.log`, `*.tmp` (temporary files)
-- `GoogleTakeoutDemo.html` and `GoogleTakeoutDemo_files/` (test fixtures)
+- `GoogleTakeoutDemo.html` and `GoogleTakeoutDemo_files/` (test fixtures - these are snapshots of actual Google Takeout pages used for testing)
 
 ## Documentation Standards
 
@@ -208,7 +208,7 @@ When adding support for additional languages:
 ### Debugging
 - Use console.log statements (already present in content.js)
 - Check Chrome DevTools console for errors
-- Test with demo.html before testing on actual Takeout page
+- Test with GoogleTakeoutDemo.html before testing on actual Takeout page
 - Use "Highlight Links" button to visually verify detection
 
 ## Performance Considerations
