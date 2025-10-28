@@ -8,14 +8,14 @@ The `testDemo` feature provides automated testing for the Google Takeout link de
 
 ### 1. GoogleTakeoutDemo.html
 A realistic simulation of the Google Takeout download page with:
-- **155 total download links** - representing multiple archive parts
+- **131 total download links** - representing multiple archive parts from a real saved Google Takeout page
 - **54 links marked as downloaded** - simulating already completed downloads
-- **101 links to download** - active download links
-- Realistic Google Takeout styling and structure
-- Uses authentic URL patterns (`https://takeout.google.com/download?i=...`)
+- **77 links to download** - active download links
+- Real Google Takeout page structure with embedded JavaScript data
+- Uses authentic URL patterns and Google's dynamic rendering structure
 
 ### 2. GoogleTakeoutDemo_files/
-A folder containing supporting resources for the demo HTML (currently just a placeholder CSS file).
+A folder containing supporting resources for the real saved Google Takeout page, including JavaScript files, images, and other assets required for the page to function.
 
 ### 3. testDemo.js
 An automated test script that:
@@ -59,9 +59,9 @@ The `downloadAllLinks()` function now:
 The message listener now returns additional information:
 ```javascript
 {
-  count: 155,           // Total links found
+  count: 131,           // Total links found
   downloaded: 54,       // Already downloaded
-  toDownload: 101,      // Remaining to download
+  toDownload: 77,       // Remaining to download
   links: [...]          // Array with download status for each link
 }
 ```
@@ -94,15 +94,15 @@ Google Takeout Demo Test
 
 Test Results:
 ------------------------------------------------------------
-Total links found:        155
+Total links found:        131
 Already downloaded:       54
-To download:              101
+To download:              77
 
 Validation:
 ------------------------------------------------------------
-✓ Total links: 155 (expected 155)
+✓ Total links: 131 (expected 131)
 ✓ Downloaded: 54 (expected 54)
-✓ To download: 101 (expected 101)
+✓ To download: 77 (expected 77)
 
 ============================================================
 ✓ ALL TESTS PASSED
@@ -139,9 +139,9 @@ To manually test the extension with the demo HTML:
 
 3. **Test the extension**:
    - Click the extension icon
-   - Click "Find Links" - should show: "Found 155 link(s) (54 downloaded, 101 to download)"
-   - Click "Highlight Links" - should highlight all 155 links
-   - Click "Download All" - should attempt to download only the 101 non-downloaded links
+   - Click "Find Links" - should show: "Found 131 link(s) (54 downloaded, 77 to download)"
+   - Click "Highlight Links" - should highlight all 131 links
+   - Click "Download All" - should attempt to download only the 77 non-downloaded links
 
 ## Technical Details
 

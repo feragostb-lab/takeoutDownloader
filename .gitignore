@@ -29,3 +29,7 @@ build/
 # Extension store files
 *.crx
 *.pem
+
+# Backup files
+*.old
+*_files.old/
